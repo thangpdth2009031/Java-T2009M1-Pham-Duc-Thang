@@ -1,9 +1,8 @@
 package thang.t2009m1.t2009m1java.entity;
 
 import java.time.LocalDate;
-import java.util.Date;
 
-public class User {
+public class Account {
     private int id;
     private String username;
     private String password;
@@ -13,10 +12,10 @@ public class User {
     private int status;
     private LocalDate birthday;
 
-    public User() {
+    public Account() {
     }
 
-    public User(int id, String username, String password, String fullName, String email, String phone, int status, LocalDate birthday) {
+    public Account(int id, String username, String password, String fullName, String email, String phone, int status, LocalDate birthday) {
         this.id = id;
         this.username = username;
         this.password = password;
