@@ -9,6 +9,5 @@ class TestTest {
     @Test
    public void test() {
        Connection connection = ConnectionHelper.getConnection();
-
    }
 }

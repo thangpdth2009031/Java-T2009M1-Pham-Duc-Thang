@@ -9,4 +9,5 @@ public interface AccountModel {
     boolean update(int id, Account accountUpdate);
     boolean delete(int id);
     List<Account> findAll();
+    Account findById(int id);
 }

@@ -1,7 +1,5 @@
 package thang.t2009m1.t2009m1java.entity;
 
-import java.time.LocalDate;
-
 public class Account {
     private int id;
     private String username;
@@ -10,12 +8,10 @@ public class Account {
     private String email;
     private String phone;
     private int status;
-    private LocalDate birthday;
+    private String birthday;
 
-    public Account() {
-    }
 
-    public Account(int id, String username, String password, String fullName, String email, String phone, int status, LocalDate birthday) {
+    public Account(int id, String username, String password, String fullName, String email, String phone, int status, String birthday) {
         this.id = id;
         this.username = username;
         this.password = password;
@@ -24,6 +20,24 @@ public class Account {
         this.phone = phone;
         this.status = status;
         this.birthday = birthday;
+    }
+
+    public Account() {
+
+    }
+
+    @Override
+    public String toString() {
+        return "Account{" +
+                "id=" + id +
+                ", username='" + username + '\'' +
+                ", password='" + password + '\'' +
+                ", fullName='" + fullName + '\'' +
+                ", email='" + email + '\'' +
+                ", phone='" + phone + '\'' +
+                ", status=" + status +
+                ", birthday=" + birthday +
+                '}';
     }
 
     public int getId() {
@@ -38,55 +52,62 @@ public class Account {
         return username;
     }
 
-    public void setUsername(String username) {
+    public String setUsername(String username) {
         this.username = username;
+        return username;
     }
 
     public String getPassword() {
         return password;
     }
 
-    public void setPassword(String password) {
+    public String setPassword(String password) {
         this.password = password;
+        return password;
     }
 
     public String getFullName() {
         return fullName;
     }
 
-    public void setFullName(String fullName) {
+    public String setFullName(String fullName) {
         this.fullName = fullName;
+        return fullName;
     }
 
     public String getEmail() {
         return email;
     }
 
-    public void setEmail(String email) {
+    public String setEmail(String email) {
         this.email = email;
+        return email;
     }
 
     public String getPhone() {
         return phone;
     }
 
-    public void setPhone(String phone) {
+    public String setPhone(String phone) {
         this.phone = phone;
+        return phone;
     }
 
     public int getStatus() {
         return status;
     }
 
-    public void setStatus(int status) {
+    public int setStatus(int status) {
         this.status = status;
+        return status;
     }
 
-    public LocalDate getBirthday() {
+    public String getBirthday() {
         return birthday;
     }
 
-    public void setBirthday(LocalDate birthday) {
+    public String setBirthday(String birthday) {
         this.birthday = birthday;
+        return birthday;
     }
 }

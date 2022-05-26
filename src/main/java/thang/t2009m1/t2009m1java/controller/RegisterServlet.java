@@ -1,6 +1,9 @@
 package thang.t2009m1.t2009m1java.controller;
 
+import thang.t2009m1.t2009m1java.entity.Account;
 import thang.t2009m1.t2009m1java.entity.User;
+import thang.t2009m1.t2009m1java.model.AccountModel;
+import thang.t2009m1.t2009m1java.model.MySqlAccountModel;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -13,6 +16,8 @@ import java.time.LocalDate;
 import java.util.Date;
 
 public class RegisterServlet extends HttpServlet {
+    AccountModel mySqlAccountModel;
+
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         req.getRequestDispatcher("/User/register.jsp").forward(req, resp);
@@ -20,6 +25,7 @@ public class RegisterServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        MySqlAccountModel mySqlAccountModel = new MySqlAccountModel();
         req.setCharacterEncoding("UTF-8");
         resp.setContentType("text/html;charset=UTF-8");
         resp.setCharacterEncoding("UTF-8");
@@ -29,16 +35,17 @@ public class RegisterServlet extends HttpServlet {
         String email = req.getParameter("email");
         String phone = req.getParameter("phone");
         String birthday = (req.getParameter("birthday"));
-        LocalDate date = LocalDate.parse(birthday);
-        User user = new User();
-        user.setUsername(username);
-        user.setBirthday(date);
-        user.setUsername(username);
-        user.setFullName(fullName);
-        user.setPhone(phone);
-        user.setEmail(email);
-        user.setPassword(password);
-        req.setAttribute("user", user);
+        Account account = new Account();
+        account.setUsername(username);
+        account.setPassword(password);
+        account.setFullName(fullName);
+        account.setEmail(email);
+        account.setPhone(phone);
+        account.setStatus(1);
+        account.setBirthday(birthday);
+        req.setAttribute("user", account);
+        boolean result = mySqlAccountModel.save(account);
+        System.out.println(result);
         req.getRequestDispatcher("/User/account-success.jsp").forward(req, resp);
     }
 }

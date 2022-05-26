@@ -1,6 +1,4 @@
-<%@ page import="thang.t2009m1.t2009m1java.entity.User" %><%
-    User user = new User();
-%>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -92,7 +90,7 @@
         <input type="text" placeholder="Enter Phone" name="phone" required/>
 
         <label><b>Birthday</b></label>
-        <input type="date" placeholder="Enter Birthday" name="birthday" required/>
+        <input type="text" placeholder="Enter Birthday" name="birthday" required/>
         <hr>
         <button type="submit" class="registerbtn">Register</button>
         <button type="reset" class="ui-helper-reset">Reset</button>
