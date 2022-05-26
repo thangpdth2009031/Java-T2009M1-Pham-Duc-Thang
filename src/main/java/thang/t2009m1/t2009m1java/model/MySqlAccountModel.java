@@ -9,10 +9,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MySqlAccountModel implements AccountModel{
-    Connection connection = ConnectionHelper.getConnection();
+
     @Override
     public boolean save(Account account) {
         try {
+            Connection connection = ConnectionHelper.getConnection();
             PreparedStatement preparedStatement =
                     connection.prepareStatement("insert into accounts (username, email, password, fullName, phone, status, birthday) values (?,?,?,?,?,?, ?)");
             preparedStatement.setString(1, account.getUsername());

@@ -43,7 +43,6 @@ public class RegisterServlet extends HttpServlet {
         account.setPhone(phone);
         account.setStatus(1);
         account.setBirthday(birthday);
-        req.setAttribute("user", account);
         boolean result = mySqlAccountModel.save(account);
         System.out.println(result);
         req.getRequestDispatcher("/User/account-success.jsp").forward(req, resp);
