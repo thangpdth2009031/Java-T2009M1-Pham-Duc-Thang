@@ -19,4 +19,20 @@
         <servlet-name>register</servlet-name>
         <url-pattern>/register</url-pattern>
     </servlet-mapping>
+    <servlet>
+        <servlet-name>product</servlet-name>
+        <servlet-class>thang.t2009m1.t2009m1java.controller.ProductServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>product</servlet-name>
+        <url-pattern>/product</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>list-product</servlet-name>
+        <servlet-class>thang.t2009m1.t2009m1java.controller.ListProductServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>list-product</servlet-name>
+        <url-pattern>/list-product</url-pattern>
+    </servlet-mapping>
 </web-app>

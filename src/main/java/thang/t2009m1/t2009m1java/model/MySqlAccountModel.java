@@ -1,5 +1,6 @@
 package thang.t2009m1.t2009m1java.model;
 
+import thang.t2009m1.t2009m1java.constant.SqlConstant;
 import thang.t2009m1.t2009m1java.entity.Account;
 import thang.t2009m1.t2009m1java.util.ConnectionHelper;
 
@@ -10,33 +11,36 @@ import java.util.List;
 
 public class MySqlAccountModel implements AccountModel{
 
+
     @Override
-    public boolean save(Account account) {
+    public boolean save(Account obj) {
         try {
             Connection connection = ConnectionHelper.getConnection();
             PreparedStatement preparedStatement =
-                    connection.prepareStatement("insert into accounts (username, email, password, fullName, phone, status, birthday) values (?,?,?,?,?,?, ?)");
-            preparedStatement.setString(1, account.getUsername());
-            preparedStatement.setString(2, account.getEmail());
-            preparedStatement.setString(3, account.getPassword());
-            preparedStatement.setString(4, account.getFullName());
-            preparedStatement.setString(5, account.getPhone());
-            preparedStatement.setInt(6, account.getStatus());
-//            String birthday = String.valueOf(account.getBirthday());
-//            LocalDate birthdayLocal = LocalDate.parse(birthday);
-            preparedStatement.setString(7, account.getBirthday());
+                    connection.prepareStatement(SqlConstant.ACCOUNT_INSERT);
+            preparedStatement.setString(1, obj.getUsername());
+            preparedStatement.setString(2, obj.getPassword());
+            preparedStatement.setString(3, obj.getFullName());
+            preparedStatement.setString(4, obj.getEmail());
+            preparedStatement.setString(5, obj.getPhone());
+            preparedStatement.setString(6, obj.getBirthday().toString());
+            preparedStatement.setString(7, obj.getCreatedAt().toString());
+            preparedStatement.setString(8, obj.getUpdatedAt().toString());
+            preparedStatement.setInt(9, obj.getCreatedBy());
+            preparedStatement.setInt(10, obj.getUpdatedBy());
+            preparedStatement.setInt(11, obj.getStatus().getValue());
             preparedStatement.execute();
             return true;
-        } catch (SQLException e) {
-            e.printStackTrace();
+        } catch (Exception e) {
+            System.err.println(e.getMessage());
         }
         return false;
     }
 
     @Override
     public boolean update(int id, Account accountUpdate) {
-        Connection connection = ConnectionHelper.getConnection();
         try {
+            Connection connection = ConnectionHelper.getConnection();
             PreparedStatement preparedStatement =
                     connection.prepareStatement("update accounts set username = ?, email = ?, password = ?, fullName = ?, phone = ?, birthday = ?, status = ? where id = ?");
             preparedStatement.setString(1, accountUpdate.getUsername());
@@ -47,7 +51,7 @@ public class MySqlAccountModel implements AccountModel{
             String birthday = String.valueOf(accountUpdate.getBirthday());
             LocalDate birthdayLocal = LocalDate.parse(birthday);
             preparedStatement.setDate(6, Date.valueOf(birthdayLocal));
-            preparedStatement.setInt(7, accountUpdate.getStatus());
+            preparedStatement.setInt(7, accountUpdate.getStatus().getValue());
             preparedStatement.setInt(8, id);
             preparedStatement.execute();
             return true;

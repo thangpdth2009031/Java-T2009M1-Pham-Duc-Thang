@@ -14,6 +14,7 @@ public class MySqlUserModel implements UserModel{
         Connection connection = ConnectionHelper.getConnection();
         try {
             PreparedStatement preparedStatement = connection.prepareStatement("insert into users (username, passwordHash, status) values(?, ?,?)");
+
             preparedStatement.setString(1, user.getUsername());
             preparedStatement.setString(2, user.getPassword());
             preparedStatement.setInt(3, user.getStatus());

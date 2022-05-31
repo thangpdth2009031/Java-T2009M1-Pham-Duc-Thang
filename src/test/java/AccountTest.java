@@ -9,9 +9,10 @@ import java.util.List;
 
 public class AccountTest {
 
-    Connection connection = ConnectionHelper.getConnection();
+
     @Test
     public void save() {
+        Connection connection = ConnectionHelper.getConnection();
         try {
             PreparedStatement preparedStatement = connection.prepareStatement("insert into accounts (username, password, fullName, email, phone, status, birthday) values (?, ?, ?, ?, ?, ?, ?)");
             preparedStatement.setString(1, "cuongtoi2");
@@ -61,6 +62,7 @@ public class AccountTest {
     }
     @Test
     public void findAll() {
+        Connection connection = ConnectionHelper.getConnection();
         List<Account> accounts = new ArrayList<>();
         try {
             PreparedStatement preparedStatement =
@@ -87,6 +89,7 @@ public class AccountTest {
     }
     @Test
     public void findById() {
+        Connection connection = ConnectionHelper.getConnection();
         try {
             PreparedStatement preparedStatement =
                     connection.prepareStatement("select * from accounts where id = ?");
