@@ -35,4 +35,44 @@
         <servlet-name>list-product</servlet-name>
         <url-pattern>/list-product</url-pattern>
     </servlet-mapping>
+    <servlet>
+        <servlet-name>admin-index</servlet-name>
+        <jsp-file>/admin/index.jsp</jsp-file>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>admin-index</servlet-name>
+        <url-pattern>/admin</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>admin-product-create</servlet-name>
+        <servlet-class>thang.t2009m1.t2009m1java.controller.product.CreateProductServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>admin-product-create</servlet-name>
+        <url-pattern>/admin/product/create</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>admin-product-update</servlet-name>
+        <servlet-class>thang.t2009m1.t2009m1java.controller.product.UpdateProductServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>admin-product-update</servlet-name>
+        <url-pattern>/admin/product/update</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>admin-product-delete</servlet-name>
+        <servlet-class>thang.t2009m1.t2009m1java.controller.product.DeleteProductServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>admin-product-delete</servlet-name>
+        <url-pattern>/admin/product/delete</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>admin-product-list</servlet-name>
+        <servlet-class>thang.t2009m1.t2009m1java.controller.product.ListProductServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>admin-product-list</servlet-name>
+        <url-pattern>/admin/product/list</url-pattern>
+    </servlet-mapping>
 </web-app>

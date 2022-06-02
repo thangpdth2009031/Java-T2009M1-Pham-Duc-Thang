@@ -1,12 +1,8 @@
 package thang.t2009m1.t2009m1java.controller;
 
-import thang.t2009m1.t2009m1java.entity.Account;
 import thang.t2009m1.t2009m1java.entity.Product;
-import thang.t2009m1.t2009m1java.model.AccountModel;
-import thang.t2009m1.t2009m1java.model.MySqlAccountModel;
-import thang.t2009m1.t2009m1java.model.MySqlProductModel;
-import thang.t2009m1.t2009m1java.model.ProductModel;
-import thang.t2009m1.t2009m1java.myenum.AccountStatus;
+import thang.t2009m1.t2009m1java.model.product.MySqlProductModel;
+import thang.t2009m1.t2009m1java.model.product.ProductModel;
 import thang.t2009m1.t2009m1java.myenum.ProductStatus;
 
 import javax.servlet.ServletException;
@@ -15,7 +11,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.math.BigDecimal;
-import java.time.LocalDate;
 
 public class ProductServlet extends HttpServlet {
     ProductModel productModel;

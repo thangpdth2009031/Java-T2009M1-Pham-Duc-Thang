@@ -1,8 +1,8 @@
 package thang.t2009m1.t2009m1java.controller;
 
 import thang.t2009m1.t2009m1java.entity.Product;
-import thang.t2009m1.t2009m1java.model.MySqlProductModel;
-import thang.t2009m1.t2009m1java.model.ProductModel;
+import thang.t2009m1.t2009m1java.model.product.MySqlProductModel;
+import thang.t2009m1.t2009m1java.model.product.ProductModel;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;

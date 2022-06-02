@@ -7,16 +7,14 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%HashMap<String, String> errors = (HashMap<String, String>) request.getAttribute("errors");%>
 <%
     Product product = (Product) request.getAttribute("product");
     if (product == null) {
         product = new Product();
     }
-    if (errors != null) {
-        for (String i : errors.keySet()) {
-            System.out.println(errors.get(i));
-        }
+    HashMap<String, String> errors = (HashMap<String, String>) request.getAttribute("errors");
+    if (errors == null) {
+        errors = new HashMap<>();
     }
 %>
 <!DOCTYPE html>
@@ -44,26 +42,22 @@
             <label>Name product</label>
             <input type="text" class="form-control" value="<%=product.getName()%>" placeholder="Enter product name"
                    name="name">
-            <% if (errors != null) { %>
-            <% for (String i : errors.keySet()) { %>
-            <% if (i.equals("name")) { %>
-            <p class="valid"><%=errors.get(i)%>
+            <%
+                if (errors.containsKey("name")) {
+            %>
+            <p class="valid">* <%=errors.get("name")%>
             </p>
-            <% } %>
-            <% } %>
             <%}%>
         </div>
         <div class="mb-3">
             <label>Description</label>
             <input type="text" class="form-control" value="<%=product.getDescription()%>"
                    placeholder="Enter description" name="description">
-            <% if (errors != null) { %>
-            <% for (String i : errors.keySet()) { %>
-            <% if (i.equals("description")) { %>
-            <p class="valid"><%=errors.get(i)%>
+            <%
+                if (errors.containsKey("description")) {
+            %>
+            <p class="valid">* <%=errors.get("description")%>
             </p>
-            <% } %>
-            <% } %>
             <%}%>
         </div>
         <div class="mb-3">
@@ -80,55 +74,45 @@
             <label>Thumbnail</label>
             <input type="text" class="form-control" value="<%=product.getThumbnail()%>" placeholder="Enter thumbnail"
                    name="thumbnail">
-            <% if (errors != null) { %>
-            <% for (String i : errors.keySet()) { %>
-            <% if (i.equals("thumbnail")) { %>
-            <p class="valid"><%=errors.get(i)%>
+            <%
+                if (errors.containsKey("thumbnail")) {
+            %>
+            <p class="valid"><%=errors.get("name")%>
             </p>
-            <% } %>
-            <% } %>
             <%}%>
         </div>
         <div class="mb-3">
             <label>Manufacture email</label>
             <input type="text" class="form-control" value="<%=product.getManufactureEmail()%>"
                    placeholder="Enter manufacture email" name="manufactureEmail">
-            <% if (errors != null) { %>
-            <% for (String i : errors.keySet()) { %>
-            <% if (i.equals("email")) { %>
-            <p class="valid"><%=errors.get(i)%>
+            <%
+                if (errors.containsKey("email")) {
+            %>
+            <p class="valid">* <%=errors.get("email")%>
             </p>
-            <% } %>
-            <% } %>
             <%}%>
-            <% if (errors != null) { %>
-            <% for (String i : errors.keySet()) { %>
-            <% if (i.equals("emailValid")) { %>
-            <p class="valid"><%=errors.get(i)%>
+            <%
+                if (errors.containsKey("emailValid")) {
+            %>
+            <p class="valid">* <%=errors.get("emailValid")%>
             </p>
-            <% } %>
-            <% } %>
             <%}%>
         </div>
         <div class="mb-3">
             <label>Manufacture phone</label>
             <input type="text" class="form-control" value="<%=product.getManufacturePhone()%>"
                    placeholder="Enter manufacture phone" name="manufacturePhone">
-            <% if (errors != null) { %>
-            <% for (String i : errors.keySet()) { %>
-            <% if (i.equals("phone")) { %>
-            <p class="valid"><%=errors.get(i)%>
+            <%
+                if (errors.containsKey("phone")) {
+            %>
+            <p class="valid">* <%=errors.get("phone")%>
             </p>
-            <% } %>
-            <% } %>
             <%}%>
-            <% if (errors != null) { %>
-            <% for (String i : errors.keySet()) { %>
-            <% if (i.equals("phoneValid")) { %>
-            <p class="valid"><%=errors.get(i)%>
+            <%
+                if (errors.containsKey("phoneValid")) {
+            %>
+            <p class="valid">* <%=errors.get("phone")%>
             </p>
-            <% } %>
-            <% } %>
             <%}%>
         </div>
         <button type="submit" class="btn btn-primary">Submit</button>
