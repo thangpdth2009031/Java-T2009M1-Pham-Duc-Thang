@@ -1,6 +1,4 @@
-package thang.t2009m1.t2009m1java.myenum;
-
-import thang.t2009m1.t2009m1java.entity.Product;
+package thang.t2009m1.t2009m1java.controller.myenum;
 
 public enum ProductStatus {
     STOCK (1), OUT_OF_STOCK(0), APPROVED(2), NOT_APPROVED(-2),DELETED(-1), UNDEFINE(3);

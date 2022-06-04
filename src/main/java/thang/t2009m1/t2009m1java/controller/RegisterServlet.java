@@ -1,20 +1,16 @@
 package thang.t2009m1.t2009m1java.controller;
 
 import thang.t2009m1.t2009m1java.entity.Account;
-import thang.t2009m1.t2009m1java.entity.User;
 import thang.t2009m1.t2009m1java.model.AccountModel;
 import thang.t2009m1.t2009m1java.model.MySqlAccountModel;
-import thang.t2009m1.t2009m1java.myenum.AccountStatus;
+import thang.t2009m1.t2009m1java.controller.myenum.AccountStatus;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.time.LocalDate;
-import java.util.Date;
 
 public class RegisterServlet extends HttpServlet {
     AccountModel accountModel;

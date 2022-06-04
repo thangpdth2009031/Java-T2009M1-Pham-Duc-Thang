@@ -1,24 +1,43 @@
 package thang.t2009m1.t2009m1java.entity;
 
 import thang.t2009m1.t2009m1java.base.BaseEntity;
-import thang.t2009m1.t2009m1java.myenum.CategoryStatus;
+import thang.t2009m1.t2009m1java.controller.myenum.CategoryStatus;
 
 import java.time.LocalDateTime;
+import java.util.HashMap;
+
+import static thang.t2009m1.t2009m1java.util.StringValidationHelper.checkValidEmail;
+import static thang.t2009m1.t2009m1java.util.StringValidationHelper.checkValidPhone;
 
 public class Category extends BaseEntity {
 
     private int id;
     private String name;
     private CategoryStatus status;
-
-    public Category() {
+    HashMap<String, String> errors = new HashMap<>();
+    public boolean isValid() {
+        checkValid();
+        return errors.size() == 0;
     }
 
-
-
+    private void checkValid() {
+        if (name == null || name.length() == 0) {
+            errors.put("name", "Please enter name");
+        }
+    }
+    public Category() {
+    }
     public Category(int id, String name) {
         this.id = id;
         this.name = name;
+    }
+
+    public HashMap<String, String> getErrors() {
+        return errors;
+    }
+
+    public void setErrors(HashMap<String, String> errors) {
+        this.errors = errors;
     }
 
     public int getId() {

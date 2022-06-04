@@ -1,7 +1,7 @@
 package thang.t2009m1.t2009m1java.entity;
 
 import thang.t2009m1.t2009m1java.base.BaseEntity;
-import thang.t2009m1.t2009m1java.myenum.AccountStatus;
+import thang.t2009m1.t2009m1java.controller.myenum.AccountStatus;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;

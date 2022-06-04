@@ -1,11 +1,9 @@
-package thang.t2009m1.t2009m1java.myenum;
+package thang.t2009m1.t2009m1java.controller.myenum;
 
-public enum CategoryStatus {
+public enum AccountStatus {
     ACTIVE(1), DEACTIVE(0), DELETED(-1), UNDEFINED(-2);
-
     private int value;
-
-    CategoryStatus(int value) {
+    AccountStatus(int value) {
         this.value = value;
     }
 
@@ -13,13 +11,13 @@ public enum CategoryStatus {
         return value;
     }
 
-    public static CategoryStatus of(int value) {
-        for (CategoryStatus accountStatus :
-                CategoryStatus.values()) {
+    public static AccountStatus of(int value) {
+        for (AccountStatus accountStatus :
+                AccountStatus.values()) {
             if (accountStatus.getValue() == value) {
                 return accountStatus;
             }
         }
-        return CategoryStatus.UNDEFINED;
+        return UNDEFINED;
     }
 }

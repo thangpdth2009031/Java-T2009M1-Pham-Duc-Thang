@@ -1,9 +1,12 @@
 package thang.t2009m1.t2009m1java.controller.product;
 
+import thang.t2009m1.t2009m1java.entity.Category;
 import thang.t2009m1.t2009m1java.entity.Product;
+import thang.t2009m1.t2009m1java.model.category.CategoryModel;
+import thang.t2009m1.t2009m1java.model.category.MySqlCategoryModel;
 import thang.t2009m1.t2009m1java.model.product.MySqlProductModel;
 import thang.t2009m1.t2009m1java.model.product.ProductModel;
-import thang.t2009m1.t2009m1java.myenum.ProductStatus;
+import thang.t2009m1.t2009m1java.controller.myenum.ProductStatus;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -11,15 +14,20 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.math.BigDecimal;
+import java.util.List;
 
 public class CreateProductServlet extends HttpServlet {
     private ProductModel productModel;
+    private CategoryModel categoryModel;
     public CreateProductServlet() {
         this.productModel = new MySqlProductModel();
+        this.categoryModel = new MySqlCategoryModel();
     }
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        req.getRequestDispatcher("/product/create-product.jsp").forward(req, resp);
+        List<Category> categoryList = this.categoryModel.findAll();
+        req.setAttribute("categories", categoryList);
+        req.getRequestDispatcher("/admin/view/product/create.jsp").forward(req, resp);
     }
 
     @Override

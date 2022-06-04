@@ -75,4 +75,37 @@
         <servlet-name>admin-product-list</servlet-name>
         <url-pattern>/admin/product/list</url-pattern>
     </servlet-mapping>
+
+    <servlet>
+        <servlet-name>admin-category-create</servlet-name>
+        <servlet-class>thang.t2009m1.t2009m1java.controller.category.CreateCategory</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>admin-category-create</servlet-name>
+        <url-pattern>/admin/category/create</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>admin-category-update</servlet-name>
+        <servlet-class>thang.t2009m1.t2009m1java.controller.category.UpdateCategory</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>admin-category-update</servlet-name>
+        <url-pattern>/admin/category/update</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>admin-category-delete</servlet-name>
+        <servlet-class>thang.t2009m1.t2009m1java.controller.category.DeleteCategory</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>admin-category-delete</servlet-name>
+        <url-pattern>/admin/category/delete</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>admin-category-list</servlet-name>
+        <servlet-class>thang.t2009m1.t2009m1java.controller.category.ListCategory</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>admin-category-list</servlet-name>
+        <url-pattern>/admin/category/list</url-pattern>
+    </servlet-mapping>
 </web-app>

@@ -1,5 +1,9 @@
 <%@ page import="java.util.HashMap" %>
-<%@ page import="thang.t2009m1.t2009m1java.entity.Product" %><%--
+<%@ page import="thang.t2009m1.t2009m1java.entity.Product" %>
+<%@ page import="thang.t2009m1.t2009m1java.controller.category.ListCategory" %>
+<%@ page import="thang.t2009m1.t2009m1java.entity.Category" %>
+<%@ page import="java.util.List" %>
+<%@ page import="java.util.ArrayList" %><%--
   Created by IntelliJ IDEA.
   User: DUCTHANG
   Date: 6/1/2022
@@ -9,14 +13,16 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%HashMap<String, String> errors = (HashMap<String, String>) request.getAttribute("errors");%>
 <%
+    List<Category> categoryList = (List<Category>) request.getAttribute("categories");
+    if (categoryList == null) {
+        categoryList = new ArrayList<>();
+    }
     Product product = (Product) request.getAttribute("product");
     if (product == null) {
         product = new Product();
     }
-    if (errors != null) {
-        for (String i : errors.keySet()) {
-            System.out.println(errors.get(i));
-        }
+    if (errors == null) {
+        errors = new HashMap<>();
     }
 %>
 <!DOCTYPE html>
@@ -97,7 +103,17 @@
                         </div>
                         <div class="card-body">
                             <div class="basic-form">
-                                <form>
+                                <form method="post" action="/admin/product/create">
+                                    <div class="form-row">
+                                        <div class="form-group col-md-4">
+                                            <label>State</label>
+                                            <select id="inputState" class="form-control">
+                                                <% for (int i = 0; i < categoryList.size(); i++) { %>
+                                                <option value="<%=categoryList.get(i).getId()%>"><%=categoryList.get(i).getName()%></option>
+                                                <% } %>
+                                            </select>
+                                        </div>
+                                    </div>
                                     <div class="form-row">
                                         <div class="col-sm-6">
                                             <input type="text" class="form-control" value="<%=product.getName()%>"

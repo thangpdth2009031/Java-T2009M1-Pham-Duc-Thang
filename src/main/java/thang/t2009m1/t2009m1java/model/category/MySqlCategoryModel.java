@@ -2,7 +2,7 @@ package thang.t2009m1.t2009m1java.model.category;
 
 import thang.t2009m1.t2009m1java.constant.SqlConstant;
 import thang.t2009m1.t2009m1java.entity.Category;
-import thang.t2009m1.t2009m1java.myenum.CategoryStatus;
+import thang.t2009m1.t2009m1java.controller.myenum.CategoryStatus;
 import thang.t2009m1.t2009m1java.util.ConnectionHelper;
 
 import java.sql.*;

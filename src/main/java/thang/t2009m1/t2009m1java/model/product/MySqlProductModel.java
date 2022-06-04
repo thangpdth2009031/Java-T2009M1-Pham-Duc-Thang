@@ -1,16 +1,14 @@
 package thang.t2009m1.t2009m1java.model.product;
 
 import thang.t2009m1.t2009m1java.constant.SqlConstant;
+import thang.t2009m1.t2009m1java.controller.myenum.CategoryStatus;
+import thang.t2009m1.t2009m1java.entity.Category;
 import thang.t2009m1.t2009m1java.entity.Product;
-import thang.t2009m1.t2009m1java.model.product.ProductModel;
-import thang.t2009m1.t2009m1java.myenum.ProductStatus;
+import thang.t2009m1.t2009m1java.controller.myenum.ProductStatus;
 import thang.t2009m1.t2009m1java.util.ConnectionHelper;
 
 import java.math.BigDecimal;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -147,31 +145,52 @@ public class MySqlProductModel implements ProductModel {
             preparedStatement.setInt(1, id);
             preparedStatement.setInt(2, ProductStatus.STOCK.getValue());
             ResultSet rs = preparedStatement.executeQuery();
-            while(rs.next()) {
-                String name = rs.getString("name");
-                String description = rs.getString("description");
-                String detail = rs.getString("detail");
-                Double price = rs.getDouble("price");
-                String thumbnail = rs.getString("thumbnail");
-                String manufactureEmail = rs.getString("manufactureEmail");
-                String manufacturePhone = rs.getString("manufacturePhone");
-                LocalDateTime createdAt = rs.getTimestamp("createdAt").toLocalDateTime();
-                LocalDateTime updatedAt = rs.getTimestamp("updatedAt").toLocalDateTime();
-                LocalDateTime deletedAt = null;
-                if(rs.getTimestamp("deletedAt") != null) {
-                    deletedAt = rs.getTimestamp("deletedAt").toLocalDateTime();
-                }
-                int createdBy = rs.getInt("createdBy");
-                int updatedBy = rs.getInt("updatedBy");
-                int deletedBy = rs.getInt("deletedBy");
-                ProductStatus status = ProductStatus.values()[rs.getInt("status")];
-                Product product = new Product(id, name, description, detail, price, thumbnail, manufactureEmail, manufacturePhone, createdAt, updatedAt, deletedAt, createdBy, updatedBy, deletedBy, status);
-                return product;
+            if (rs.next()) {
+                return convertResultSetToObject(rs);
             }
         }catch (SQLException e) {
 //            e.printStackTrace();
             System.out.println(e);
         }
         return null;
+    }
+
+    private Product convertResultSetToObject(ResultSet resultSet) {
+        try {
+            int id = resultSet.getInt(SqlConstant.PRODUCT_FIELD_ID);
+            int categoryId = resultSet.getInt(SqlConstant.PRODUCT_FIELD_CATEGORY_ID);
+            String name = resultSet.getString(SqlConstant.PRODUCT_FIELD_NAME);
+            String description = resultSet.getString(SqlConstant.PRODUCT_FIELD_DESCRIPTION);
+            String detail = resultSet.getString(SqlConstant.PRODUCT_FIELD_DETAIL);
+            BigDecimal price = resultSet.getBigDecimal(SqlConstant.PRODUCT_FIELD_PRICE);
+            int status = resultSet.getInt(SqlConstant.PRODUCT_FIELD_STATUS);
+            LocalDateTime createdAt = resultSet.getTimestamp(SqlConstant.FIELD_CREATED_AT).toLocalDateTime();
+            LocalDateTime updatedAt = resultSet.getTimestamp(SqlConstant.FIELD_UPDATED_AT).toLocalDateTime();
+            LocalDateTime deletedAt = null;
+            Timestamp timestamp = resultSet.getTimestamp(SqlConstant.FIELD_DELETED_AT);
+            if (timestamp != null) {
+                deletedAt = timestamp.toLocalDateTime();
+            }
+            int createdBy = resultSet.getInt(SqlConstant.FIELD_CREATED_BY);
+            int updatedBy = resultSet.getInt(SqlConstant.FIELD_UPDATED_BY);
+            int deletedBy = resultSet.getInt(SqlConstant.FIELD_DELETED_BY);
+            return Product.ProductBuilder.aProduct()
+                    .withId(id)
+                    .withCategoryId(categoryId)
+                    .withName(name)
+                    .withDescription(description)
+                    .withDetail(detail)
+                    .withPrice(price)
+                    .withStatus(ProductStatus.of(status))
+                    .withCreatedAt(createdAt)
+                    .withUpdatedAt(updatedAt)
+                    .withDeletedAt(deletedAt)
+                    .withCreatedBy(createdBy)
+                    .withUpdatedBy(updatedBy)
+                    .withDeletedBy(deletedBy)
+                    .build();
+        } catch (SQLException ex) {
+            return null;
+        }
     }
 }
