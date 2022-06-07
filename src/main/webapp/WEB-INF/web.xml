@@ -142,4 +142,12 @@
         <servlet-name>RemoveCartServlet</servlet-name>
         <url-pattern>/shopping-cart/remove</url-pattern>
     </servlet-mapping>
+    <servlet>
+        <servlet-name>Home</servlet-name>
+        <servlet-class>thang.t2009m1.t2009m1java.controller.product.client.ListProductClientServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>Home</servlet-name>
+        <url-pattern>/index</url-pattern>
+    </servlet-mapping>
 </web-app>
