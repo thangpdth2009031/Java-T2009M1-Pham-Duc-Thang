@@ -3,7 +3,8 @@
 <%@ page import="thang.t2009m1.t2009m1java.controller.category.ListCategory" %>
 <%@ page import="thang.t2009m1.t2009m1java.entity.Category" %>
 <%@ page import="java.util.List" %>
-<%@ page import="java.util.ArrayList" %><%--
+<%@ page import="java.util.ArrayList" %>
+<%@ page import="thang.t2009m1.t2009m1java.controller.myenum.ProductStatus" %><%--
   Created by IntelliJ IDEA.
   User: DUCTHANG
   Date: 6/1/2022
@@ -11,18 +12,26 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%HashMap<String, String> errors = (HashMap<String, String>) request.getAttribute("errors");%>
 <%
+//    int action = 1;
+//    String url = "/admin/products/create";
+//    String title = "Create new product";
+//    action = (int) request.getAttribute("action");
+//    if (action == 2) {
+//        url = "/admin/products/update";
+//        title = "Update product";
+//    }
     List<Category> categoryList = (List<Category>) request.getAttribute("categories");
     if (categoryList == null) {
         categoryList = new ArrayList<>();
     }
-    Product product = (Product) request.getAttribute("product");
-    if (product == null) {
-        product = new Product();
-    }
+    HashMap<String, String> errors = (HashMap<String, String>) request.getAttribute("errors");
     if (errors == null) {
         errors = new HashMap<>();
+    }
+    Product product = (Product) request.getAttribute("product");
+    if (product == null) {
+        product = Product.ProductBuilder.aProduct().build();
     }
 %>
 <!DOCTYPE html>
@@ -105,17 +114,28 @@
                             <div class="basic-form">
                                 <form method="post" action="/admin/product/create">
                                     <div class="form-row">
-                                        <div class="form-group col-md-4">
-                                            <label>State</label>
+                                        <div class="form-group col-md-6">
+                                            <label>Category</label>
                                             <select id="inputState" class="form-control">
                                                 <% for (int i = 0; i < categoryList.size(); i++) { %>
                                                 <option value="<%=categoryList.get(i).getId()%>"><%=categoryList.get(i).getName()%></option>
                                                 <% } %>
                                             </select>
                                         </div>
+                                        <div class="form-group col-md-6">
+                                            <label>Status</label>
+                                            <select name="status" class="form-control"
+                                                    data-value="<%=product.getStatus()%>">
+                                                <%for (int i = 0; i < ProductStatus.values().length; i++) {%>
+                                                <option value="<%=ProductStatus.values()[i].getValue()%>"><%=ProductStatus.values()[i].name()%>
+                                                </option>
+                                                <%}%>
+                                            </select>
+                                        </div>
                                     </div>
                                     <div class="form-row">
                                         <div class="col-sm-6">
+                                            <label>Product name</label>
                                             <input type="text" class="form-control" value="<%=product.getName()%>"
                                                    placeholder="Enter product name"
                                                    name="name">
@@ -127,42 +147,28 @@
                                             <%}%>
                                         </div>
                                         <div class="col-sm-6 mt-2 mt-sm-0">
-                                            <label>Description</label>
-                                            <input type="text" class="form-control"
-                                                   value="<%=product.getDescription()%>"
-                                                   placeholder="Enter description" name="description">
-                                            <%
-                                                if (errors.containsKey("description")) {
-                                            %>
-                                            <p class="valid">* <%=errors.get("description")%>
-                                            </p>
-                                            <%}%>
-                                        </div>
-                                    </div>
-                                    <div class="form-row">
-                                        <div class="col-sm-6">
-                                            <label>Detail</label>
-                                            <input type="text" class="form-control" value="<%=product.getDetail()%>"
-                                                   placeholder="Enter detail"
-                                                   name="detail">
-                                        </div>
-                                        <div class="col-sm-6 mt-2 mt-sm-0">
                                             <label>Price</label>
                                             <input type="number" class="form-control" value="<%=product.getPrice()%>"
                                                    placeholder="Enter price"
                                                    name="price">
                                         </div>
                                     </div>
-                                    <div class="form-row">
+                                    <div class="form-row mt-2">
                                         <div class="col-sm-6">
-                                            <label>Thumbnail</label>
-                                            <input type="text" class="form-control" value="<%=product.getThumbnail()%>"
-                                                   placeholder="Enter thumbnail"
-                                                   name="thumbnail">
+                                            <label>Manufacture phone</label>
+                                            <input type="text" class="form-control"
+                                                   value="<%=product.getManufacturePhone()%>"
+                                                   placeholder="Enter manufacture phone" name="manufacturePhone">
                                             <%
-                                                if (errors.containsKey("thumbnail")) {
+                                                if (errors.containsKey("phone")) {
                                             %>
-                                            <p class="valid"><%=errors.get("name")%>
+                                            <p class="valid">* <%=errors.get("phone")%>
+                                            </p>
+                                            <%}%>
+                                            <%
+                                                if (errors.containsKey("phoneValid")) {
+                                            %>
+                                            <p class="valid">* <%=errors.get("phone")%>
                                             </p>
                                             <%}%>
                                         </div>
@@ -185,24 +191,38 @@
                                             <%}%>
                                         </div>
                                     </div>
-                                    <div class="form-row">
+                                    <div class="form-row  mt-2">
+                                        <div class="col-sm-6">
+                                            <label>Thumbnail</label>
+                                            <div class="mt-2">
+                                                <img id="upload_widget" class="img-preview"
+                                                     style="width: 100px;height: 100%;object-fit: cover;cursor:pointer"
+                                                     src="https://res.cloudinary.com/phamthanghehe/image/upload/v1654539471/opolccjzav6agkexl1uw.jpg">
+                                                <input type="hidden" name="thumbnail" id="hidden-thumbnails">
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <label>Description</label>
+                                            <textarea dirname="description" class="form-control" placeholder="Enter description" name="description"
+                                                      id="exampleFormControlTextarea1" rows="3"
+                                                      spellcheck="false"
+                                                      data-value="<%=product.getDescription()%>"></textarea>
+                                            <%if (errors.containsKey("description")) {%>
+                                            <p class="valid">*<%=errors.get("description")%></p>
+                                            <%}%>
+                                        </div>
+                                    </div>
+                                    <div class="form-row mt-2">
                                         <div class="col-sm-12">
-                                            <label>Manufacture phone</label>
-                                            <input type="text" class="form-control"
-                                                   value="<%=product.getManufacturePhone()%>"
-                                                   placeholder="Enter manufacture phone" name="manufacturePhone">
-                                            <%
-                                                if (errors.containsKey("phone")) {
-                                            %>
-                                            <p class="valid">* <%=errors.get("phone")%>
-                                            </p>
-                                            <%}%>
-                                            <%
-                                                if (errors.containsKey("phoneValid")) {
-                                            %>
-                                            <p class="valid">* <%=errors.get("phone")%>
-                                            </p>
-                                            <%}%>
+                                            <label>Detail</label>
+                                            <input id="editor" type="text" class="form-control" value="<%=product.getDetail()%>"
+                                                   placeholder="Enter detail"
+                                                   name="detail">
+                                        </div>
+                                    </div>
+                                    <div class="form-group mt-2 row">
+                                        <div class="col-sm-10">
+                                            <button type="submit" class="btn btn-primary">Submit</button>
                                         </div>
                                     </div>
                                 </form>
@@ -248,6 +268,35 @@
     Scripts
 ***********************************-->
 <!-- Required vendors -->
+<script src="https://cdn.ckeditor.com/ckeditor5/34.1.0/classic/ckeditor.js"></script>
+<script>
+    ClassicEditor
+        .create( document.querySelector( '#editor' ) )
+        .then( editor => {
+            window.editor = editor;
+        } )
+        .catch( error => {
+            console.error( 'There was a problem initializing the editor.', error );
+        } );
+</script>
+
+<script src="https://upload-widget.cloudinary.com/global/all.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+    var myWidget = cloudinary.createUploadWidget({
+            cloudName: 'phamthanghehe',
+            uploadPreset: 'hrn13yyl'}, (error, result) => {
+            if (!error && result && result.event === "success") {
+                $('#upload_widget').attr('src', result.info.secure_url);
+                $('#hidden-thumbnails').val(result.info.secure_url);
+            }
+        }
+    )
+
+    document.getElementById("upload_widget").addEventListener("click", function(){
+        myWidget.open();
+    }, false);
+</script>
 <jsp:include page="/admin/includes/script.jsp"/>
 
 </body>

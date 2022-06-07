@@ -108,4 +108,38 @@
         <servlet-name>admin-category-list</servlet-name>
         <url-pattern>/admin/category/list</url-pattern>
     </servlet-mapping>
+
+    <!--Shopping cart-->
+    <servlet>
+        <servlet-name>AddCartServlet</servlet-name>
+        <servlet-class>thang.t2009m1.t2009m1java.controller.shoppingcart.AddCartServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>AddCartServlet</servlet-name>
+        <url-pattern>/shopping-cart/add</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>SubCartServlet</servlet-name>
+        <servlet-class>thang.t2009m1.t2009m1java.controller.shoppingcart.SubCartServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>SubCartServlet</servlet-name>
+        <url-pattern>/shopping-cart/sub</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>GetCartServlet</servlet-name>
+        <servlet-class>thang.t2009m1.t2009m1java.controller.shoppingcart.GetCartServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>GetCartServlet</servlet-name>
+        <url-pattern>/shopping-cart/get</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>RemoveCartServlet</servlet-name>
+        <servlet-class>thang.t2009m1.t2009m1java.controller.shoppingcart.RemoveCartServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>RemoveCartServlet</servlet-name>
+        <url-pattern>/shopping-cart/remove</url-pattern>
+    </servlet-mapping>
 </web-app>

@@ -1,7 +1,6 @@
 package thang.t2009m1.t2009m1java.util;
 
 import java.sql.Connection;
-import java.sql.Driver;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 

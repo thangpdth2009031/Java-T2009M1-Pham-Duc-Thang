@@ -10,13 +10,13 @@
 <%@ page import="thang.t2009m1.t2009m1java.entity.Product" %>
 <%@ page import="java.util.List" %>
 <%@ page import="java.util.ArrayList" %>
-<%@ page import="thang.t2009m1.t2009m1java.entity.Category" %><%--
-  Created by IntelliJ IDEA.
-  User: DUCTHANG
-  Date: 6/1/2022
-  Time: 11:27 AM
-  To change this template use File | Settings | File Templates.
---%>
+<%@ page import="thang.t2009m1.t2009m1java.entity.Category" %>
+<%
+    List<Category> categoryList = (List<Category>) request.getAttribute("categories");
+    if (categoryList == null) {
+        categoryList = new ArrayList<>();
+    }
+%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <!DOCTYPE html>
 <html lang="en">
@@ -92,7 +92,7 @@
                 <div class="col-lg-12">
                     <div class="card">
                         <div class="card-header">
-                            <h4 class="card-title">Table Stripped</h4>
+                            <h4 class="card-title">List Category</h4>
                         </div>
                         <div class="card-body">
                             <div class="table-responsive">
@@ -105,21 +105,19 @@
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    <%
-                                        List<Category> categoryList = (ArrayList<Category>) request.getAttribute("categories");
-                                        for(Category category : categoryList) {%>
-                                    <tr>
-                                        <td><%= category.getId() %></td>
+                                    <%for (int i = 0; i < categoryList.size(); i++) {%>
+                                    <tr class="<%=i%2 == 0 ? "" : "odd"%>">
+                                        <td><%=categoryList.get(i).getId()%></td>
+                                        <td><%=categoryList.get(i).getName()%></td>
                                         <td>
-                                            <%= category.getName() %>
-                                        </td>
-                                        <td><span><a href="/products/update?id=<%= category.getId() %>" class="mr-4" data-toggle="tooltip"
-                                                     data-placement="top" title="Edit"><i
-                                                class="fa fa-pencil color-muted"></i> </a><a
-                                                href="/products/delete?id=<%= category.getId() %>" data-toggle="tooltip"
-                                                data-placement="top" title="Close"><i
-                                                class="fa fa-close color-danger"></i></a></span>
-                                        </td>
+                                            <span>
+                                                <a href="${pageContext.request.contextPath}/products/update?id=<%=categoryList.get(i).getId()%>" class="mr-4" data-toggle="tooltip"
+                                                   data-placement="top" title="Edit"><i
+                                                        class="fa fa-pencil color-muted"></i> </a><a
+                                                    href="${pageContext.request.contextPath}/products/delete?id=<%=categoryList.get(i).getId()%>" data-toggle="tooltip"
+                                                    data-placement="top" title="Close"><i
+                                                    class="fa fa-close color-danger"></i></a></span>
+                                          </td>
                                     </tr>
                                     <%}%>
                                     </tbody>

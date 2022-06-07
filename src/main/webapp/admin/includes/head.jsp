@@ -17,4 +17,9 @@
     <link rel="stylesheet" href="${pageContext.request.contextPath}/admin/vendor/owl-carousel/css/owl.theme.default.min.css">
     <link href="${pageContext.request.contextPath}/admin/vendor/jqvmap/css/jqvmap.min.css" rel="stylesheet">
     <link href="${pageContext.request.contextPath}/admin/css/style.css" rel="stylesheet">
+    <style>
+        .valid {
+            color: red;
+        }
+    </style>
 </head>

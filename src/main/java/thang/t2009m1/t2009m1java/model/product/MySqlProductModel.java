@@ -32,6 +32,7 @@ public class MySqlProductModel implements ProductModel {
             preparedStatement.setInt(10, product.getCreatedBy());
             preparedStatement.setInt(11, product.getUpdatedBy());
             preparedStatement.setInt(12, product.getStatus().getValue());
+            preparedStatement.setInt(13, product.getCategoryId());
             preparedStatement.execute();
             return true;
         } catch (Exception e) {
@@ -88,53 +89,24 @@ public class MySqlProductModel implements ProductModel {
 
     @Override
     public List<Product> findAll() {
-        List<Product> products = new ArrayList<>();
-        try{
+        List<Product> listObj = new ArrayList<>();
+        try {
             Connection connection = ConnectionHelper.getConnection();
-            PreparedStatement preparedStatement = connection.prepareStatement(SqlConstant.SELECT_PRODUCT);
+            PreparedStatement preparedStatement =
+                    connection.prepareStatement(SqlConstant.SELECT_PRODUCT);
             preparedStatement.setInt(1, ProductStatus.STOCK.getValue());
             ResultSet resultSet = preparedStatement.executeQuery();
-            while(resultSet.next()) {
-                int id = resultSet.getInt("id");
-                String name = resultSet.getString("name");
-                String description = resultSet.getString("description");
-                String detail = resultSet.getString("detail");
-                BigDecimal price = resultSet.getBigDecimal("price");
-                String thumbnail = resultSet.getString("thumbnail");
-                String manufactureEmail = resultSet.getString("manufacture_email");
-                String manufacturePhone = resultSet.getString("manufacture_phone");
-                LocalDateTime createdAt = resultSet.getTimestamp("created_at").toLocalDateTime();
-                LocalDateTime updatedAt = resultSet.getTimestamp("updated_at").toLocalDateTime();
-                LocalDateTime deletedAt = null;
-                if(resultSet.getTimestamp("deleted_at") != null) {
-                    deletedAt = resultSet.getTimestamp("deleted_at").toLocalDateTime();
+            while (resultSet.next()) {
+                Product product = convertResultSetToObject(resultSet);
+                if (product != null) {
+                    listObj.add(product);
                 }
-                int createdBy = resultSet.getInt("created_by");
-                int updatedBy = resultSet.getInt("updated_by");
-                int deletedBy = resultSet.getInt("deleted_by");
-                ProductStatus status = ProductStatus.of(resultSet.getInt("status"));
-                Product product = new Product();
-                product.setId(id);
-                product.setName(name);
-                product.setDescription(description);
-                product.setDetail(detail);
-                product.setPrice(price);
-                product.setThumbnail(thumbnail);
-                product.setManufactureEmail(manufactureEmail);
-                product.setManufacturePhone(manufacturePhone);
-                product.setCreatedAt(createdAt);
-                product.setUpdatedAt(updatedAt);
-                product.setDeletedAt(deletedAt);
-                product.setCreatedBy(createdBy);
-                product.setUpdatedBy(updatedBy);
-                product.setDeletedBy(deletedBy);
-                product.setStatus(status);
-                products.add(product);
+
             }
-        }catch (SQLException e) {
-            System.out.println(e);
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
-        return products;
+        return listObj;
     }
 
     @Override
@@ -162,6 +134,9 @@ public class MySqlProductModel implements ProductModel {
             String name = resultSet.getString(SqlConstant.PRODUCT_FIELD_NAME);
             String description = resultSet.getString(SqlConstant.PRODUCT_FIELD_DESCRIPTION);
             String detail = resultSet.getString(SqlConstant.PRODUCT_FIELD_DETAIL);
+            String manufactureEmail = resultSet.getString(SqlConstant.PRODUCT_FIELD_MANUFACTURE_EMAIL);
+            String manufacturePhone = resultSet.getString(SqlConstant.PRODUCT_FIELD_MANUFACTURE_PHONE);
+            String thumbnail = resultSet.getString(SqlConstant.PRODUCT_FIELD_THUMBNAIL);
             BigDecimal price = resultSet.getBigDecimal(SqlConstant.PRODUCT_FIELD_PRICE);
             int status = resultSet.getInt(SqlConstant.PRODUCT_FIELD_STATUS);
             LocalDateTime createdAt = resultSet.getTimestamp(SqlConstant.FIELD_CREATED_AT).toLocalDateTime();
@@ -181,6 +156,9 @@ public class MySqlProductModel implements ProductModel {
                     .withDescription(description)
                     .withDetail(detail)
                     .withPrice(price)
+                    .withThumbnail(thumbnail)
+                    .withManufactureEmail(manufactureEmail)
+                    .withManufacturePhone(manufacturePhone)
                     .withStatus(ProductStatus.of(status))
                     .withCreatedAt(createdAt)
                     .withUpdatedAt(updatedAt)
