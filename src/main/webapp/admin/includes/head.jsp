@@ -21,5 +21,11 @@
         .valid {
             color: red;
         }
+        .ck-content {
+            height: 130px!important;
+        }
+        #exampleFormControlTextarea1 {
+            height: 104px;
+        }
     </style>
 </head>

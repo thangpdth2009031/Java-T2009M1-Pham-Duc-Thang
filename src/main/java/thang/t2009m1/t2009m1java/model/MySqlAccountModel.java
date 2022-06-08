@@ -1,11 +1,13 @@
 package thang.t2009m1.t2009m1java.model;
 
 import thang.t2009m1.t2009m1java.constant.SqlConstant;
+import thang.t2009m1.t2009m1java.controller.myenum.AccountStatus;
 import thang.t2009m1.t2009m1java.entity.Account;
 import thang.t2009m1.t2009m1java.util.ConnectionHelper;
 
 import java.sql.*;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -29,6 +31,7 @@ public class MySqlAccountModel implements AccountModel{
             preparedStatement.setInt(9, obj.getCreatedBy());
             preparedStatement.setInt(10, obj.getUpdatedBy());
             preparedStatement.setInt(11, obj.getStatus().getValue());
+            preparedStatement.setInt(12, obj.getRoleId());
             preparedStatement.execute();
             return true;
         } catch (Exception e) {
@@ -129,5 +132,55 @@ public class MySqlAccountModel implements AccountModel{
             e.printStackTrace();
         }
         return null;
+    }
+
+
+    @Override
+    public Account findByUsername(String username) {
+        try {
+            Connection connection = ConnectionHelper.getConnection();
+            PreparedStatement preparedStatement =
+                    connection.prepareStatement(SqlConstant.ACCOUNT_SELECT_BY_USERNAME);
+            preparedStatement.setInt(1, AccountStatus.ACTIVE.getValue());
+            preparedStatement.setString(2, username);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            if (resultSet.next()) {
+
+                return convertResultSetToAccount(resultSet);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    private Account convertResultSetToAccount(ResultSet resultSet) {
+        try {
+            int id = resultSet.getInt(SqlConstant.ACCOUNT_FIELD_ID);
+            String username = resultSet.getString(SqlConstant.ACCOUNT_FIELD_USERNAME);
+            String passwordHash = resultSet.getString(SqlConstant.ACCOUNT_FIELD_PASSWORD);
+            String fullName = resultSet.getString(SqlConstant.ACCOUNT_FIELD_FULLNAME);
+            int status = resultSet.getInt(SqlConstant.ACCOUNT_FIELD_STATUS);
+            LocalDateTime createdAt = resultSet.getTimestamp(SqlConstant.FIELD_CREATED_AT).toLocalDateTime();
+            LocalDateTime updatedAt = resultSet.getTimestamp(SqlConstant.FIELD_UPDATED_AT).toLocalDateTime();
+            LocalDateTime deletedAt = null;
+            Timestamp timestamp = resultSet.getTimestamp(SqlConstant.FIELD_DELETED_AT);
+            if (timestamp != null) {
+                deletedAt = timestamp.toLocalDateTime();
+            }
+            int createdBy = resultSet.getInt(SqlConstant.FIELD_CREATED_BY);
+            int updatedBy = resultSet.getInt(SqlConstant.FIELD_UPDATED_BY);
+            int deletedBy = resultSet.getInt(SqlConstant.FIELD_DELETED_BY);
+            Account account = new Account(id, username, passwordHash, fullName, AccountStatus.of(status));
+            account.setCreatedAt(createdAt);
+            account.setUpdatedAt(updatedAt);
+            account.setDeletedAt(deletedAt);
+            account.setCreatedBy(createdBy);
+            account.setUpdatedBy(updatedBy);
+            account.setDeletedBy(deletedBy);
+            return account;
+        } catch (SQLException ex) {
+            return null;
+        }
     }
 }

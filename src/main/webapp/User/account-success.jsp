@@ -1,5 +1,8 @@
+<%@ page import="thang.t2009m1.t2009m1java.entity.Account" %>
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
-
+<%
+    Account account = (Account) request.getAttribute("account");
+%>
 <!DOCTYPE html>
 <html>
 <title>W3.CSS</title>
@@ -10,7 +13,7 @@
     <h3>SUCCESS!</h3>
     <p>Đăng kí thành công </p>
 </div>
-<div>Thông tin tài khoản</div>
+<div>Xin chao: <%= account.getUsername() %></div>
 
 </body>
 </html>

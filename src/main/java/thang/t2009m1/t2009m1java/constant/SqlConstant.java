@@ -1,7 +1,7 @@
 package thang.t2009m1.t2009m1java.constant;
 
 public class SqlConstant {
-    public static final String ACCOUNT_INSERT = "INSERT INTO accounts (username, password, fullName, email, phone, birthday, createdAt, updatedAt, createdBy, updatedBy, status) values(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+    public static final String ACCOUNT_INSERT = "INSERT INTO accounts (username, password, fullName, email, phone, birthday, createdAt, updatedAt, createdBy, updatedBy, status, role_id) values(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
     public static final String PRODUCT_INSERT = "INSERT INTO products (name, description, detail, price, thumbnail, manufacture_email, manufacture_phone, created_at, updated_at, created_by, updated_by, status, category_id) values(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
     public static final String SELECT_PRODUCT = "SELECT * FROM products WHERE status = ?;";
@@ -38,4 +38,10 @@ public class SqlConstant {
     public static final String PRODUCT_FIELD_MANUFACTURE_EMAIL = "manufactureEmail";
     public static final String PRODUCT_FIELD_MANUFACTURE_PHONE = "manufacturePhone";
     public static final String PRODUCT_FIELD_STATUS = "status";
+    public static final String ACCOUNT_FIELD_ID = "id";
+    public static final String ACCOUNT_FIELD_USERNAME = "username";
+    public static final String ACCOUNT_FIELD_PASSWORD = "password";
+    public static final String ACCOUNT_FIELD_FULLNAME = "fullName";
+    public static final String ACCOUNT_FIELD_STATUS = "status";
+    public static final String ACCOUNT_SELECT_BY_USERNAME = "SELECT * FROM accounts where status = ? and username = ?";
 }
